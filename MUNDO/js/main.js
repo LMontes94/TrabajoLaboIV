@@ -1,7 +1,19 @@
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0";
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 
+const EARTH_RADIUS = 6.371000;
 let scene, camera, renderer, sphere, controls, skybox;
+
+function setSphereRotationDefault() {
+  let increaseValue = 0.0003 * EARTH_RADIUS;
+  if (sphere.rotation.y + increaseValue > EARTH_RADIUS) {
+    sphere.rotation.y = 0;
+  }
+  sphere.rotation.y += increaseValue;
+}
+
+let sphereRotationSetter = setSphereRotationDefault;
+
 let skyboxImage = "space";
 const sdBtn = document.querySelector(".sd");
 const hdBtn = document.querySelector(".hd");
@@ -10,7 +22,7 @@ sdBtn.onclick = () => changeTextQuality("low");
 hdBtn.onclick = () => changeTextQuality("high");
 
 function createPathStrings(filename) {
-  const basePath = "../img/skybox/";
+  const basePath = "./img/skybox/";
   const baseFilename = basePath + filename;
   const fileType = ".png";
   const sides = ["ft", "bk", "up", "dn", "rt", "lf"];
@@ -31,7 +43,7 @@ function createMaterialArray(filename) {
 
 function setSkyBox() {
   const materialArray = createMaterialArray(skyboxImage);
-  // let temp = new THREE.TextureLoader().load("../img/space_stars_bg.jpg");
+  // let temp = new THREE.TextureLoader().load("./img/space_stars_bg.jpg");
   // let temp1 = new THREE.MeshBasicMaterial({ map: temp, side: THREE.BackSide });
   let skyboxGeo = new THREE.BoxGeometry(200, 200, 200);
   skybox = new THREE.Mesh(skyboxGeo, materialArray);
@@ -48,7 +60,7 @@ function init() {
   );
 
   setSkyBox();
-  loadTexture("../img/earth_texture.jpg");
+  loadTexture("./img/earth_texture.jpg");
   scene.add(sphere);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -77,12 +89,12 @@ function changeTextQuality(quality) {
   switch (quality) {
     case "high":
       scene.remove(sphere);
-      loadTexture("../img/earth_hd.jpg");
+      loadTexture("./img/earth_hd.jpg");
       scene.add(sphere);
       break;
     case "low":
       scene.remove(sphere);
-      loadTexture("../img/earth_texture.jpg");
+      loadTexture("./img/earth_texture.jpg");
       scene.add(sphere);
       break;
     default:
@@ -92,7 +104,7 @@ function changeTextQuality(quality) {
 
 function animate() {
   requestAnimationFrame(animate);
-  sphere.rotation.y += 0.002;
+  sphereRotationSetter();
   controls.update();
   renderer.render(scene, camera);
 }
@@ -153,9 +165,10 @@ updateButton.addEventListener("click", async () => {
   const latitude = parseFloat(latitudeInput.value);
   const longitude = parseFloat(longitudeInput.value);
 
-  if (!isNaN(latitude) && !isNaN(longitude)) {
+    if (!isNaN(latitude) && !isNaN(longitude)) {
       moveGlobeToCoordinates(latitude, longitude);
       updateClock(latitude, longitude);
+      updateCountry(latitude, longitude);
   } else {
       alert("Por favor, ingresa coordenadas válidas.");
   }
@@ -190,6 +203,28 @@ async function getCoordinatesFromTimezone(timezone) {
   }
 }
 
+function updateCountry(latitud, longitud) {
+  const countryElement = document.getElementById("country");
+  const API_KEY = "usrxdlax"
+  const url = `http://api.geonames.org/countryCodeJSON?lat=${latitud}&lng=${longitud}&username=${API_KEY}`;
+  let receivedData;
+
+  //console.log(url);
+
+  // Realizar solicitud HTTP
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      receivedData = data;
+        if (data.countryCode) {
+            countryElement.innerHTML = data.countryName;
+          } else {
+            console.error('No se pudo obtener la información del país.');
+        }
+    })
+    .catch(error => console.error('Error en la solicitud:', error));
+}
+
 
 timezoneSelector.addEventListener("change", async () => {
   const selectedTimezone = timezoneSelector.value;
@@ -204,6 +239,8 @@ timezoneSelector.addEventListener("change", async () => {
 
 
 function moveGlobeToCoordinates(latitude, longitude) {
+  sphereRotationSetter = () => { return; }
+  
   // Convierte las coordenadas geográficas en coordenadas 3D en la esfera del globo terráqueo
   const radius = 5; // Radio del globo
   const phi = (90 - latitude) * (Math.PI / 180); // Convierte la latitud a radianes
