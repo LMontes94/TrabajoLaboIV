@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>3D earth using Three JS</title>
+  </head>
+  <body>
+    
+
+    <div class="quality-select">
+      <button class="btn sd">
+        SD
+      </button>
+      <button class="btn hd">
+        HD
+      </button>
+    </div>
+
+
+    <label for="latitude">Latitud:</label>
+      <input type="text" id="latitude" placeholder="Ingresa la latitud">
+
+    <label for="longitude">Longitud:</label>
+      <input type="text" id="longitude" placeholder="Ingresa la longitud">
+
+
+      <button id="update-button">Actualizar Globo y Hora</button>
+
+
+
+      <div id="clock">00:00:00</div>
+    <!-- <script src="./js/three.min.js"></script> -->
+    <!-- <script src="./js/OrbitControls.js"></script> -->
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
