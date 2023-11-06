@@ -5,8 +5,10 @@
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0";
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 
+
 const EARTH_RADIUS = 6.371000;
 let scene, camera, renderer, sphere, controls, skybox;
+
 
 function setSphereRotationDefault() {
   let increaseValue = 0.0003 * EARTH_RADIUS;
@@ -112,6 +114,9 @@ function changeTextQuality(quality) {
   }
 }
 
+
+
+
 //animacion y render threejs
 
 function animate() {
@@ -120,6 +125,9 @@ function animate() {
   controls.update();
   renderer.render(scene, camera);
 }
+
+
+
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -131,6 +139,9 @@ window.addEventListener("resize", onWindowResize, false);
 
 init();
 animate();
+
+
+
 
 
 //------------------------------------------------------------------------------------------
@@ -201,6 +212,8 @@ function obtenerLongitud(countryInfo) {
     console.error("No se proporcionaron datos de país.");
   }
 }
+
+
 
 
 //union de america del norte y sur
@@ -319,7 +332,7 @@ updateButton.addEventListener("click", async () => {
         limpiarInput();
         mostrarElemento();
         updateClock(continentName, countryName, capital);
-
+       
       })
       .catch(error => {
         alert(error);
@@ -329,18 +342,18 @@ updateButton.addEventListener("click", async () => {
   }
 });
 
+const modal = document.getElementById("myModal");
+const acceptButton = document.getElementById("acceptButton");
 
+// Muestra el modal al cargar la página
+window.addEventListener("load", () => {
+  modal.style.display = "block";
+});
 
-
-
-
-
-
-
-
-
-
-
+// Oculta el modal al hacer clic en el botón de aceptar
+acceptButton.addEventListener("click", () => {
+  modal.style.display = "none";
+});
 
 
 
