@@ -1,3 +1,7 @@
+
+
+//CREACION DE ESCENA three.js
+
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0";
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 
@@ -43,12 +47,14 @@ function createMaterialArray(filename) {
 
 function setSkyBox() {
   const materialArray = createMaterialArray(skyboxImage);
-  // let temp = new THREE.TextureLoader().load("./img/space_stars_bg.jpg");
-  // let temp1 = new THREE.MeshBasicMaterial({ map: temp, side: THREE.BackSide });
+  let temp = new THREE.TextureLoader().load("./img/space_stars_bg.jpg");
+  let temp1 = new THREE.MeshBasicMaterial({ map: temp, side: THREE.BackSide });
   let skyboxGeo = new THREE.BoxGeometry(200, 200, 200);
   skybox = new THREE.Mesh(skyboxGeo, materialArray);
   scene.add(skybox);
 }
+
+//iniciar escena threejs
 
 function init() {
   scene = new THREE.Scene();
@@ -76,6 +82,8 @@ function init() {
   camera.position.z = 20;
 }
 
+//cargar texturas threejs
+
 function loadTexture(texture) {
   const geometry = new THREE.SphereGeometry(5, 32, 32);
   const loader = new THREE.TextureLoader();
@@ -84,6 +92,8 @@ function loadTexture(texture) {
 
   sphere = new THREE.Mesh(geometry, material);
 }
+
+//cambio de texturas threejs
 
 function changeTextQuality(quality) {
   switch (quality) {
@@ -101,6 +111,8 @@ function changeTextQuality(quality) {
       console.log("error must choose between values: high / low");
   }
 }
+
+//animacion y render threejs
 
 function animate() {
   requestAnimationFrame(animate);
@@ -120,29 +132,31 @@ window.addEventListener("resize", onWindowResize, false);
 init();
 animate();
 
+
+//------------------------------------------------------------------------------------------
+
 //funciones js para funcionamiento y no three js
 
+
+//texto hidden hora/dia/pais
 document.querySelector('.quality-select3').style.display = 'none';
 
 function mostrarElemento() {
-  // Obtén los elementos con los ID
 
-
-  // Verifica si los elementos contienen valores
-
-  // Muestra el elemento .quality-select3
   document.querySelector('.quality-select3').style.display = 'block';
 
 }
 
-
+//obtener pais
 function obtenerPais() {
   const countryInput = document.getElementById("country");
   return countryInput.value;
 }
 
+
+//datos del pais en la api
 function obtenerDatosPais(countryName) {
-  const username = "usrxdlax"; // Debes registrarte en Geonames para obtener un usuario y usarlo en la API
+  const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
 
   const geonamesUrl = `http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
 
@@ -167,6 +181,8 @@ function obtenerDatosPais(countryName) {
     });
 }
 
+//obtener latitud del pais 
+
 function obtenerLatitud(countryInfo) {
   if (countryInfo) {
     const latitud = parseFloat(countryInfo.south);
@@ -176,6 +192,7 @@ function obtenerLatitud(countryInfo) {
   }
 }
 
+//obtener longitud del pais
 function obtenerLongitud(countryInfo) {
   if (countryInfo) {
     const longitud = parseFloat(countryInfo.west);
@@ -185,10 +202,13 @@ function obtenerLongitud(countryInfo) {
   }
 }
 
+
+//union de america del norte y sur
 function obtenerContinenteAmericano() {
   return "America";
 }
 
+//sacar espacios
 function reemplazarEspaciosEnCapital(countryInfo) {
   if (countryInfo.capital) {
     countryInfo.capital = countryInfo.capital.replace(/\s/g, "_");
@@ -196,10 +216,16 @@ function reemplazarEspaciosEnCapital(countryInfo) {
   return countryInfo;
 }
 
+
+//normalizar sin tildes
 function quitarTildes(texto) {
   return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+
+
+
+//obtener fecha
 function obtenerFechaDesdeDatetime(datetimeString) {
   const fechaHora = new Date(datetimeString);
   const dia = fechaHora.getDate();
@@ -208,17 +234,25 @@ function obtenerFechaDesdeDatetime(datetimeString) {
   return { dia, mes, anio };
 }
 
+//dar formato a la fecha
 function formatearFecha(dia, mes, anio) {
   return `${dia.toString().padStart(2, '0')} / ${mes.toString().padStart(2, '0')} / ${anio}`;
 }
+
+
+//mostrar fecha
 function mostrarFecha(fechaCompleta) {
   return formatearFecha(fechaCompleta["dia"], fechaCompleta["mes"], fechaCompleta["anio"])
 }
 
+
+//limpiar el imput del placeholder
 function limpiarInput() {
   document.getElementById("country").value = "";
 }
 
+
+//limpiar el intervalo del reloj
 function limpiarClock(intervalo) {
   if (intervalo) {
     clearInterval(intervalo);
@@ -227,11 +261,15 @@ function limpiarClock(intervalo) {
   document.getElementById("clock").value = ""
 }
 
+
+//obtener hora segun el timezone del pais
 function obtenerHora(timezone) {
   const dia = new Date();
   const hora = dia.toLocaleTimeString("default", { timeZone: timezone });
   return hora;
 }
+
+//actualizar reloj.
 let intervalo;
 function updateClock(continentName, countryName, capital) {
   const day = document.getElementById("day");
@@ -276,6 +314,9 @@ function updateClock(continentName, countryName, capital) {
   }
 }
 
+
+
+//boton update para mostrar todo lo hecho anteriormente
 const updateButton = document.getElementById("update-button");
 updateButton.addEventListener("click", async () => {
   const countryName = obtenerPais();
@@ -310,6 +351,21 @@ updateButton.addEventListener("click", async () => {
     alert("Por favor, ingresa un país válido.");
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 async function getCoordinatesFromTimezone(timezone) {
