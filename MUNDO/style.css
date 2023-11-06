@@ -70,14 +70,53 @@
   left: 15px;
 }
 
+
 .rounded-box {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 25px;
   background-color: white;
-  border-radius: 15px; 
-  padding: 20px; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-  display: inline-block; 
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+
+.rounded-box input {
+  font-size: 20px; 
+  border: none; 
+  padding: 5px; 
+  vertical-align: middle; 
+}
+
+/* Estilos del placeholder */
+.rounded-box input::placeholder {
+  font-style: italic;
+  color: #999; 
+}
+
+
+/* Estilos para el botón */
+.rounded-box button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px; 
+  transition: background-color 0.2s, transform 0.2s; 
+}
+
+/* Estilos al hacer clic en el botón */
+.rounded-box button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); 
+}
+
+/* Estilos adicionales para el botón cuando se hace clic */
+.rounded-box button:active {
+  background-color: #ffffff; 
+  transform: scale(0.95); 
 }
 
 
