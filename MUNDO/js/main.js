@@ -200,21 +200,6 @@ function quitarTildes(texto) {
   return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-function obtenerFechaDesdeDatetime(datetimeString) {
-  const fechaHora = new Date(datetimeString);
-  const dia = fechaHora.getDate();
-  const mes = fechaHora.getMonth() + 1; // Sumar 1 para obtener el mes real
-  const anio = fechaHora.getFullYear();
-  return { dia, mes, anio };
-}
-
-function formatearFecha(dia, mes, anio) {
-  return `${dia.toString().padStart(2, '0')} / ${mes.toString().padStart(2, '0')} / ${anio}`;
-}
-function mostrarFecha(fechaCompleta) {
-  return formatearFecha(fechaCompleta["dia"], fechaCompleta["mes"], fechaCompleta["anio"])
-}
-
 function limpiarInput() {
   document.getElementById("country").value = "";
 }
@@ -232,6 +217,13 @@ function obtenerHora(timezone) {
   const hora = dia.toLocaleTimeString("default", { timeZone: timezone });
   return hora;
 }
+
+function obtenerFecha(timezone) {
+  const dia = new Date();
+  const fecha = dia.toLocaleDateString("default", { timeZone: timezone });
+  return fecha;
+}
+
 let intervalo;
 function updateClock(continentName, countryName, capital) {
   const day = document.getElementById("day");
@@ -254,10 +246,10 @@ function updateClock(continentName, countryName, capital) {
           const dateTimeString = data.datetime;
           //const hora = dateTimeString.match(/T(\d{2}:\d{2}:\d{2})/)[1];/*la expresión regular /T(\d{2}:\d{2}:\d{2})/ busca el patrón "T" 
           //                                                                     seguido de "HH:MM:SS" en la cadena dateTimeString y el [1] extrae la parte de la hora. */
-          const fechaCompleta = obtenerFechaDesdeDatetime(dateTimeString);
+          const fechaCompleta = obtenerFecha(data.timezone);
           console.log(fechaCompleta);
 
-          day.textContent = mostrarFecha(fechaCompleta);
+          day.textContent = fechaCompleta;
 
           intervalo = setInterval(() => {
             clockElement.textContent = obtenerHora(data.timezone);
