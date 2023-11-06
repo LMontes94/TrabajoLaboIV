@@ -224,13 +224,14 @@ function quitarTildes(texto) {
 
 
 
-
+/*
 //obtener fecha
 function obtenerFechaDesdeDatetime(datetimeString) {
   const fechaHora = new Date(datetimeString);
   const dia = fechaHora.getDate();
   const mes = fechaHora.getMonth() + 1; // Sumar 1 para obtener el mes real
   const anio = fechaHora.getFullYear();
+  
   return { dia, mes, anio };
 }
 
@@ -240,11 +241,22 @@ function formatearFecha(dia, mes, anio) {
 }
 
 
+
+
 //mostrar fecha
 function mostrarFecha(fechaCompleta) {
   return formatearFecha(fechaCompleta["dia"], fechaCompleta["mes"], fechaCompleta["anio"])
 }
+*/
 
+
+function obtenerFecha(datetime)
+{
+  const fechaHora = new Date();
+  const dia = fechaHora.toLocaleDateString("default", { datetime: datetime });
+
+  return dia;
+}
 
 //limpiar el imput del placeholder
 function limpiarInput() {
@@ -289,13 +301,15 @@ function updateClock(continentName, countryName, capital) {
       .then(data => {
         console.log(data)
         if (data.datetime) {
-          const dateTimeString = data.datetime;
           //const hora = dateTimeString.match(/T(\d{2}:\d{2}:\d{2})/)[1];/*la expresión regular /T(\d{2}:\d{2}:\d{2})/ busca el patrón "T" 
           //                                                                     seguido de "HH:MM:SS" en la cadena dateTimeString y el [1] extrae la parte de la hora. */
-          const fechaCompleta = obtenerFechaDesdeDatetime(dateTimeString);
-          console.log(fechaCompleta);
+          //const fechaCompleta = obtenerFechaDesdeDatetime(dateTimeString);
+          //const fechaCompleta = obtenerFecha(dateTimeString);
+          console.log(obtenerFecha(data.datetime));
 
-          day.textContent = mostrarFecha(fechaCompleta);
+          //day.textContent = mostrarFecha(fechaCompleta);
+
+          day.textContent = obtenerFecha(data.datetime);
 
           intervalo = setInterval(() => {
             clockElement.textContent = obtenerHora(data.timezone);
