@@ -120,7 +120,20 @@ window.addEventListener("resize", onWindowResize, false);
 init();
 animate();
 
+//funciones js para funcionamiento y no three js
 
+document.querySelector('.quality-select3').style.display = 'none';
+
+function mostrarElemento() {
+  // Obtén los elementos con los ID
+
+  
+  // Verifica si los elementos contienen valores
+ 
+    // Muestra el elemento .quality-select3
+    document.querySelector('.quality-select3').style.display = 'block';
+  
+}
 
 
 function obtenerPais() {
@@ -236,6 +249,7 @@ function updateClock(continentName, countryName, capital) {
 
                   day.textContent = mostrarFecha(fechaCompleta);
                   clockElement.textContent = hora;
+                  
               } else {
                   throw new Error("Error al obtener la hora local.");
               }
@@ -272,7 +286,9 @@ updateButton.addEventListener("click", async () => {
               const name = document.getElementById("nombre");
               name.textContent = countryName;
               limpiarInput();
+              mostrarElemento();              
               updateClock(continentName, countryName, capital);
+              
           })
           .catch(error => {
               alert(error);

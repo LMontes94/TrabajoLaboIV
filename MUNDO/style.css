@@ -61,3 +61,48 @@
   top: 20px;
   right: 5px;
 }
+
+
+
+.quality-select2 {
+  position: fixed; 
+  top: 510px;
+  right: 0px;
+  left: 9px;
+}
+
+.rounded-box {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 25px;
+  background-color: white;
+  border-radius: 15px; 
+  padding: 20px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  display: inline-block; 
+}
+
+
+.quality-select3 {
+  position: fixed; 
+  top: 350px;
+  right: 0px;
+  left: 9px;
+}
+
+
+.hiddentext {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 25px;
+  background-color: white;
+  border-radius: 15px; 
+  padding: 20px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  display: inline-block; 
+
+
+}
+
+.material-symbols-outlined{
+  height: 15px;
+  width: 40px;
+}
