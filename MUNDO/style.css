@@ -66,9 +66,8 @@
 
 .quality-select2 {
   position: fixed; 
-  top: 510px;
-  right: 0px;
-  left: 9px;
+  bottom: 5px;
+  left: 15px;
 }
 
 .rounded-box {
@@ -84,9 +83,8 @@
 
 .quality-select3 {
   position: fixed; 
-  top: 350px;
-  right: 0px;
-  left: 9px;
+  bottom: 100px;
+  left: 15px;
 }
 
 
