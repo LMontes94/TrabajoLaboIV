@@ -19,6 +19,7 @@ function setSphereRotationDefault() {
 }
 
 let sphereRotationSetter = setSphereRotationDefault;
+sphereRotationSetter = () => {};
 
 let skyboxImage = "space";
 const sdBtn = document.querySelector(".sd");
@@ -193,11 +194,52 @@ function obtenerDatosPais(countryName) {
 }
 
 //obtener latitud del pais 
+function calcularCoordenadas(latitud, longitud, radio) {
+  const phi = (90 - latitud) * (Math.PI / 180);
+  const theta = (longitud + 180) * (Math.PI / 180);
+
+  const x = -radio * Math.sin(phi) * Math.cos(theta);
+  const y = radio * Math.cos(phi);
+  const z = radio * Math.sin(phi) * Math.sin(theta);
+
+  return { x, y, z };
+}
+
+function centrarCamaraACoordenadas(latitud, longitud) {
+  guardarRotacionEsfera();
+  const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS); // El tercer parámetro (5) es el radio de la esfera
+  // Establece la posición de la cámara en función de las coordenadas
+  camera.position.set(coordenadas.x * 1.5, coordenadas.y * 1.5, coordenadas.z * 1.5);
+  camera.lookAt(new THREE.Vector3(0, 0, 0)); // Asegura que la cámara mire hacia el centro de la esfera
+
+  // Actualiza la matriz de proyección de la cámara
+  camera.updateProjectionMatrix();
+  setTimeout(() => {
+    restaurarRotacionEsfera();
+  }, 5000);
+}
+
+let rotationX = 0;
+let rotationY = 0;
+let rotationZ = 0;
+
+function guardarRotacionEsfera() {
+  rotationX = sphere.rotation.x;
+  rotationY = sphere.rotation.y;
+  rotationZ = sphere.rotation.z;
+}
+
+function restaurarRotacionEsfera() {
+  sphere.rotation.x = rotationX;
+  sphere.rotation.y = rotationY;
+  sphere.rotation.z = rotationZ;
+}
 
 function obtenerLatitud(countryInfo) {
   if (countryInfo) {
-    const latitud = parseFloat(countryInfo.south);
-    console.log("Latitud:", latitud);
+    const latitud = (parseFloat(countryInfo.south) + parseFloat(countryInfo.north))/2;
+    console.log(latitud);
+    return latitud;
   } else {
     console.error("No se proporcionaron datos de país.");
   }
@@ -206,8 +248,9 @@ function obtenerLatitud(countryInfo) {
 //obtener longitud del pais
 function obtenerLongitud(countryInfo) {
   if (countryInfo) {
-    const longitud = parseFloat(countryInfo.west);
+    const longitud = (parseFloat(countryInfo.west) + parseFloat(countryInfo.east))/2;
     console.log("Longitud:", longitud);
+    return longitud;
   } else {
     console.error("No se proporcionaron datos de país.");
   }
@@ -313,9 +356,9 @@ updateButton.addEventListener("click", async () => {
   if (countryName) {
     obtenerDatosPais(countryName)
       .then(countryInfo => {
-        console.log(countryInfo)
-        obtenerLatitud(countryInfo);
-        obtenerLongitud(countryInfo);
+        console.log(countryInfo);
+        const latitud = obtenerLatitud(countryInfo);
+        const longuitud = obtenerLongitud(countryInfo);
         let continentName;
         if (countryInfo.continentName.includes("America")) {
           continentName = obtenerContinenteAmericano(countryInfo)
@@ -331,8 +374,9 @@ updateButton.addEventListener("click", async () => {
         name.textContent = countryName;
         limpiarInput();
         mostrarElemento();
+        centrarCamaraACoordenadas(latitud, longuitud);
         updateClock(continentName, countryName, capital);
-       
+        marcarPaisEnEsfera(latitud,longuitud);
       })
       .catch(error => {
         alert(error);
@@ -356,6 +400,28 @@ acceptButton.addEventListener("click", () => {
 });
 
 
+
+
+function marcarPaisEnEsfera(latitud, longitud) {
+  // Crea una geometría y un material para el marcador
+  const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Geometría de una pequeña esfera
+  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Material rojo
+
+  // Crea una malla para el marcador
+  const marcador = new THREE.Mesh(geometry, material);
+
+  // Calcula las coordenadas 3D para el país
+  const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS);
+
+  // Establece la posición del marcador en las coordenadas 3D
+  marcador.position.set(coordenadas.x, coordenadas.y, coordenadas.z);
+
+  // Agrega el marcador a la escena
+  scene.add(marcador);
+
+  // Centra la cámara en las coordenadas del país
+  centrarCamaraACoordenadas(latitud, longitud);
+}
 
 /*
 async function getCoordinatesFromTimezone(timezone) {
