@@ -19,7 +19,7 @@ function setSphereRotationDefault() {
 }
 
 let sphereRotationSetter = setSphereRotationDefault;
-//sphereRotationSetter = () => {};
+sphereRotationSetter = () => {};
 
 let skyboxImage = "space";
 const sdBtn = document.querySelector(".sd");
@@ -404,7 +404,7 @@ acceptButton.addEventListener("click", () => {
 
 
 
-let marcador;
+let marcador
 function marcarPaisEnEsfera(latitud, longitud) {
   if (marcador) {
     scene.remove(marcador);
@@ -427,13 +427,4 @@ function marcarPaisEnEsfera(latitud, longitud) {
 
   // Centra la cámara en las coordenadas del país
   centrarCamaraACoordenadas(latitud, longitud);
-
-
 }
-
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 6fa6a08999a2a7cb0156443a1cab50cb9fb9e1de
