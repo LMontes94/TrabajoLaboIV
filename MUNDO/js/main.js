@@ -400,15 +400,22 @@ acceptButton.addEventListener("click", () => {
 });
 
 
-
+let marcador;
 
 function marcarPaisEnEsfera(latitud, longitud) {
   // Crea una geometría y un material para el marcador
+
+  if (marcador) {
+    scene.remove(marcador);
+  }
+
   const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Geometría de una pequeña esfera
   const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Material rojo
 
   // Crea una malla para el marcador
-  const marcador = new THREE.Mesh(geometry, material);
+  marcador = new THREE.Mesh(geometry, material);
+
+  
 
   // Calcula las coordenadas 3D para el país
   const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS);
@@ -416,6 +423,8 @@ function marcarPaisEnEsfera(latitud, longitud) {
   // Establece la posición del marcador en las coordenadas 3D
   marcador.position.set(coordenadas.x, coordenadas.y, coordenadas.z);
 
+
+ 
   // Agrega el marcador a la escena
   scene.add(marcador);
 
