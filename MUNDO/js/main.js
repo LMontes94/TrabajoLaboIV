@@ -19,7 +19,7 @@ function setSphereRotationDefault() {
 }
 
 let sphereRotationSetter = setSphereRotationDefault;
-sphereRotationSetter = () => {};
+//sphereRotationSetter = () => {};
 
 let skyboxImage = "space";
 const sdBtn = document.querySelector(".sd");
@@ -400,22 +400,18 @@ acceptButton.addEventListener("click", () => {
 });
 
 
-let marcador;
 
+let marcador
 function marcarPaisEnEsfera(latitud, longitud) {
-  // Crea una geometría y un material para el marcador
-
   if (marcador) {
     scene.remove(marcador);
   }
-
+  // Crea una geometría y un material para el marcador
   const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Geometría de una pequeña esfera
   const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Material rojo
 
   // Crea una malla para el marcador
   marcador = new THREE.Mesh(geometry, material);
-
-  
 
   // Calcula las coordenadas 3D para el país
   const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS);
@@ -423,8 +419,6 @@ function marcarPaisEnEsfera(latitud, longitud) {
   // Establece la posición del marcador en las coordenadas 3D
   marcador.position.set(coordenadas.x, coordenadas.y, coordenadas.z);
 
-
- 
   // Agrega el marcador a la escena
   scene.add(marcador);
 
@@ -432,60 +426,6 @@ function marcarPaisEnEsfera(latitud, longitud) {
   centrarCamaraACoordenadas(latitud, longitud);
 }
 
-/*
-async function getCoordinatesFromTimezone(timezone) {
-  try {
-      const baseURL = "https://nominatim.openstreetmap.org/search";
-      const format = "json";
-      const query = `timezone:${encodeURIComponent(timezone)}`;
-      const limit = 1; // Limita a una única coincidencia
-      const url = `${baseURL}?format=${format}&q=${query}&limit=${limit}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      
-      if (data.length > 0) {
-          const latitude = parseFloat(data[0].lat);
-          const longitude = parseFloat(data[0].lon);
-          return { latitude, longitude };
-      } else {
-          throw new Error("No se encontraron coordenadas para la zona horaria especificada.");
-      }
-  } catch (error) {
-      console.error("Error al obtener coordenadas:", error);
-      return null;
-  }
-}
-
-
-timezoneSelector.addEventListener("change", async () => {
-  const selectedTimezone = timezoneSelector.value;
-  const coordinates = await getCoordinatesFromTimezone(selectedTimezone);
-
-  if (coordinates) {
-      moveGlobeToCoordinates(coordinates.latitude, coordinates.longitude);
-      const currentTime = getCurrentTimeInTimezone(selectedTimezone);
-      updateClock(clock, currentTime);
-  }
-});
-
-
-function moveGlobeToCoordinates(latitude, longitude) {
-  sphereRotationSetter = () => { return; }
-  
-  // Convierte las coordenadas geográficas en coordenadas 3D en la esfera del globo terráqueo
-  const radius = 5; // Radio del globo
-  const phi = (90 - latitude) * (Math.PI / 180); // Convierte la latitud a radianes
-  const theta = (longitude + 180) * (Math.PI / 180); // Convierte la longitud a radianes
-
-  // Calcula la nueva posición del globo
-  sphere.position.x = -radius * Math.sin(phi) * Math.cos(theta);
-  sphere.position.y = radius * Math.cos(phi);
-  sphere.position.z = radius * Math.sin(phi) * Math.sin(theta);
-
-  // Asegúrate de que la esfera esté orientada hacia las nuevas coordenadas
-  sphere.lookAt(new THREE.Vector3(0, 0, 0));
-}
-*/
 
 
 
