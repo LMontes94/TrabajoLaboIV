@@ -161,8 +161,8 @@ function obtenerPais() {
 function obtenerDatosPais(countryName) {
     const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
 
-    const geonamesUrl = //`http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
-        `https://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
+    const geonamesUrl = `http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
+    // `https://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
     return fetch(geonamesUrl)
         .then(response => response.json())
         .then(data => {
