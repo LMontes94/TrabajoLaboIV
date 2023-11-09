@@ -4,7 +4,7 @@
 }
 
 #c {
-  background: url("./img/space_stars_bg.jpg") no-repeat center center;
+  background: url("../img/space_stars_bg.jpg") no-repeat center center;
   background-size: cover;
 }
 .btn-wrapper {
@@ -62,17 +62,14 @@
   right: 5px;
 }
 
-
-
 .quality-select2 {
-  position: fixed; 
+  position: fixed;
   bottom: 5px;
   left: 15px;
 }
 
-
 .rounded-box {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 25px;
   background-color: white;
   border-radius: 15px;
@@ -82,18 +79,17 @@
 }
 
 .rounded-box input {
-  font-size: 20px; 
-  border: none; 
-  padding: 5px; 
-  vertical-align: middle; 
+  font-size: 20px;
+  border: none;
+  padding: 5px;
+  vertical-align: middle;
 }
 
 /* Estilos del placeholder */
 .rounded-box input::placeholder {
   font-style: italic;
-  color: #999; 
+  color: #999;
 }
-
 
 /* Estilos para el botón */
 .rounded-box button {
@@ -103,50 +99,42 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 15px; 
-  transition: background-color 0.2s, transform 0.2s; 
+  font-size: 15px;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 /* Estilos al hacer clic en el botón */
 .rounded-box button:hover {
   background-color: #0056b3;
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 /* Estilos adicionales para el botón cuando se hace clic */
 .rounded-box button:active {
-  background-color: #ffffff; 
-  transform: scale(0.95); 
+  background-color: #ffffff;
+  transform: scale(0.95);
 }
 
-
 .quality-select3 {
-  position: fixed; 
+  position: fixed;
   bottom: 100px;
   left: 15px;
 }
 
-
 .hiddentext {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 25px;
   background-color: white;
-  border-radius: 15px; 
-  padding: 20px; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-  display: inline-block; 
-
-
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: inline-block;
 }
 
-.material-symbols-outlined{
+.material-symbols-outlined {
   height: 15px;
   width: 40px;
 }
-
-
-
-
 
 .modal {
   display: none;
@@ -165,7 +153,7 @@
   margin: 0 auto;
   padding: 20px;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 15px;
 }
 
@@ -176,6 +164,6 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 15px;
 }

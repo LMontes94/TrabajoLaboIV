@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>3D earth using Three JS</title>
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+</head>
+
+<body>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+
+            <h2>¡Bienvenido!</h2>
+
+            <br>
+
+            <p> Instrucciones:</p>
+
+            <br>
+
+            <p> Para poder localizar un país y toda su info,
+                se debe escribir en el espacio de abajo el nombre del País
+                en Inglés y con este formato : </p>
+
+            <br>
+
+            <p> Argentina , Japan , China.</p>
+
+            <br>
+
+            Notese el uso de Mayúscula en la Inicial y el nombre en Inglés.
+            </p>
+            <br>
+            <button id="acceptButton">Aceptar</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="quality-select">
+        <button class="btn sd">
+            SD
+        </button>
+        <button class="btn hd">
+            HD
+        </button>
+    </div>
+
+
+
+
+    <div class="quality-select2">
+        <div class="rounded-box">
+
+
+
+            <label for="country">Pais:</label>
+            <input type="text" id="country" placeholder="Ingresa un pais">
+            <button id="update-button"><span class="material-symbols-outlined">
+                    travel_explore
+                </span></button>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="quality-select3">
+        <div class="hiddentext">
+
+            <div id="nombre"></div>
+            <div id="day"></div>
+            <div id="clock"></div>
+        </div>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>
