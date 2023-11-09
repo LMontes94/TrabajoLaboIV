@@ -19,7 +19,7 @@ function setSphereRotationDefault() {
 }
 
 let sphereRotationSetter = setSphereRotationDefault;
-sphereRotationSetter = () => {};
+sphereRotationSetter = () => { };
 
 let skyboxImage = "space";
 const sdBtn = document.querySelector(".sd");
@@ -238,7 +238,7 @@ function restaurarRotacionEsfera() {
 
 function obtenerLatitud(countryInfo) {
   if (countryInfo) {
-    const latitud = (parseFloat(countryInfo.south) + parseFloat(countryInfo.north))/2;
+    const latitud = (parseFloat(countryInfo.south) + parseFloat(countryInfo.north)) / 2;
     console.log(latitud);
     return latitud;
   } else {
@@ -249,7 +249,7 @@ function obtenerLatitud(countryInfo) {
 //obtener longitud del pais
 function obtenerLongitud(countryInfo) {
   if (countryInfo) {
-    const longitud = (parseFloat(countryInfo.west) + parseFloat(countryInfo.east))/2;
+    const longitud = (parseFloat(countryInfo.west) + parseFloat(countryInfo.east)) / 2;
     console.log("Longitud:", longitud);
     return longitud;
   } else {
@@ -377,7 +377,7 @@ updateButton.addEventListener("click", async () => {
         mostrarElemento();
         centrarCamaraACoordenadas(latitud, longuitud);
         updateClock(continentName, countryName, capital);
-        marcarPaisEnEsfera(latitud,longuitud);
+        marcarPaisEnEsfera(latitud, longuitud);
       })
       .catch(error => {
         alert(error);
