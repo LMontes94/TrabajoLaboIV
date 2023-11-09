@@ -159,45 +159,26 @@ function obtenerPais() {
 
 //datos del pais en la api
 function obtenerDatosPais(countryName) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", `https://restcountries.com/v3.1/name/${countryName}`);
-        xhr.onload = () => {
-          if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-            if (data[0].continents[0] == undefined) {
-                throw new Error("Error obteniendo nombre del continente: no se encuentra el campo del continente")
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://restcountries.com/v3.1/name/${countryName}`);
+    xhr.onload = () => {
+        if (xhr.status !== 200) {
+            throw new Error("Error obteniendo datos del país: error de conexión con servidor");
+        }
+        const response = JSON.parse(xhr.responseText)[0];
+        const countryInfo = {
+            continent: response.continents[0],
+            latitude: response.capitalInfo.latlng[0],
+            longitude: response.capitalInfo.latlng[1]
+        }
+        for (let key in countryInfo) {
+            if (countryInfo[key] == undefined) {
+                throw new Error("Error obteniendo datos del país: no se encuentran los campos necesarios");
             }
-            console.log("continente: " + data[0].continents[0])
-            return data[0].continents[0];
-          } else {
-            throw new Error("Error obteniendo nombre del continente: error de conexión")
-          }
-        };
-        xhr.send();
-      
-    /*const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
-
-    const geonamesUrl = //`http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
-        `https://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
-    return fetch(geonamesUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.geonames && data.geonames.length > 0) {
-                // Filtra el país correcto por nombre
-                const countryInfo = data.geonames.find(country => country.countryName === countryName);
-
-                if (countryInfo) {
-                    return countryInfo;
-                } else {
-                    throw new Error("No se encontraron resultados para el país especificado.");
-                }
-            } else {
-                throw new Error("No se encontraron resultados para el país especificado.");
-            }
-        })
-        .catch(error => {
-            throw new Error("Error en la solicitud a la API de Geonames: " + error);
-        });*/
+        }
+        return countryInfo;
+    };
+    xhr.send();
 }
 
 //obtener latitud del pais 
@@ -360,18 +341,18 @@ function updateClock(continentName, countryName, capital) {
 const updateButton = document.getElementById("update-button");
 updateButton.addEventListener("click", async () => {
     const countryName = obtenerPais();
-    if (countryName) {
-        obtenerDatosPais(countryName)
+        if (countryName) {
+                obtenerDatosPais(countryName)
             .then(countryInfo => {
-                console.log(countryInfo);
-                const latitud = obtenerLatitud(countryInfo);
-                const longuitud = obtenerLongitud(countryInfo);
+                console.log("countryInfo: " + countryInfo.continent + " " + countryInfo.latitude + " " + countryInfo.longitude);
+                const latitud = obtenerLatitud(countryInfo.latitude);
+                const longuitud = obtenerLongitud(countryInfo.longitude);
                 let continentName;
-                if (countryInfo.continentName.includes("America")) {
+                if (countryInfo.continent.includes("America")) {
                     continentName = obtenerContinenteAmericano(countryInfo)
                     console.log(continentName);
                 } else {
-                    continentName = countryInfo.continentName;
+                    continentName = countryInfo.continent;
                 }
                 console.log(countryName)
                 reemplazarEspaciosEnCapital(countryInfo);
