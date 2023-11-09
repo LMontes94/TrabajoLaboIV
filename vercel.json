@@ -1,14 +1,14 @@
 {
   "version": 2,
   "builds": [{ "src": "./src/public", "use": "@vercel/static" }],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/public/$1" }
-  ],
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://api.geonames.org/:path*"
+      "destination": "https://api.geonames.org/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
 }
