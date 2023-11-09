@@ -4,11 +4,5 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/public/$1" }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "http://api.geonames.org/:path*"
-    }
   ]
 }
