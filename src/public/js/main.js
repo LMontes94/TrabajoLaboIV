@@ -159,7 +159,23 @@ function obtenerPais() {
 
 //datos del pais en la api
 function obtenerDatosPais(countryName) {
-    const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `https://restcountries.com/v3.1/name/${countryName}`);
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            if (data[0].continents[0] == undefined) {
+                throw new Error("Error obteniendo nombre del continente: no se encuentra el campo del continente")
+            }
+            console.log("continente: " + data[0].continents[0])
+            return data[0].continents[0];
+          } else {
+            throw new Error("Error obteniendo nombre del continente: error de conexión")
+          }
+        };
+        xhr.send();
+      
+    /*const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
 
     const geonamesUrl = //`http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
         `https://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
@@ -181,7 +197,7 @@ function obtenerDatosPais(countryName) {
         })
         .catch(error => {
             throw new Error("Error en la solicitud a la API de Geonames: " + error);
-        });
+        });*/
 }
 
 //obtener latitud del pais 
