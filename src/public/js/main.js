@@ -159,29 +159,24 @@ function obtenerPais() {
 
 //datos del pais en la api
 function obtenerDatosPais(countryName) {
-    const username = "usrxdlax"; //usuario registrado en la pagina WorldApi
-
-    const geonamesUrl = //`http://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
-        `https://api.geonames.org/countryInfoJSON?name=${countryName}&username=${username}`;
-    return fetch(geonamesUrl)
+    return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
         .then(response => response.json())
-        .then(data => {
-            if (data.geonames && data.geonames.length > 0) {
-                // Filtra el país correcto por nombre
-                const countryInfo = data.geonames.find(country => country.countryName === countryName);
-
-                if (countryInfo) {
-                    return countryInfo;
-                } else {
-                    throw new Error("No se encontraron resultados para el país especificado.");
-                }
-            } else {
-                throw new Error("No se encontraron resultados para el país especificado.");
+        .then(response => {
+            response = response[0]
+            const countryInfo = {
+                name: countryName,
+                continent: response.continents[0],
+                capital: response.capital[0],
+                latitude: response.capitalInfo.latlng[0],
+                longitude: response.capitalInfo.latlng[1]
             }
+            for (let key in countryInfo) {
+                if (countryInfo[key] == undefined) {
+                    throw new Error("Error obteniendo datos del país: no se encuentran los campos necesarios");
+                }
+            }
+            return countryInfo;
         })
-        .catch(error => {
-            throw new Error("Error en la solicitud a la API de Geonames: " + error);
-        });
 }
 
 //obtener latitud del pais 
@@ -344,37 +339,35 @@ function updateClock(continentName, countryName, capital) {
 const updateButton = document.getElementById("update-button");
 updateButton.addEventListener("click", async () => {
     const countryName = obtenerPais();
-    if (countryName) {
-        obtenerDatosPais(countryName)
-            .then(countryInfo => {
-                console.log(countryInfo);
-                const latitud = obtenerLatitud(countryInfo);
-                const longuitud = obtenerLongitud(countryInfo);
-                let continentName;
-                if (countryInfo.continentName.includes("America")) {
-                    continentName = obtenerContinenteAmericano(countryInfo)
-                    console.log(continentName);
-                } else {
-                    continentName = countryInfo.continentName;
-                }
-                console.log(countryName)
-                reemplazarEspaciosEnCapital(countryInfo);
-                const capital = quitarTildes(countryInfo.capital);
-                console.log(capital);
-                const name = document.getElementById("nombre");
-                name.textContent = countryName;
-                limpiarInput();
-                mostrarElemento();
-                centrarCamaraACoordenadas(latitud, longuitud);
-                updateClock(continentName, countryName, capital);
-                marcarPaisEnEsfera(latitud, longuitud);
-            })
-            .catch(error => {
-                alert(error);
-            });
-    } else {
+    if (countryName == "") {
         alert("Por favor, ingresa un país válido.");
+        return;
     }
+    obtenerDatosPais(countryName)
+    .then(countryInfo => {
+        console.log("countryInfo:");
+        console.log(countryInfo);
+        const latitud = countryInfo.latitude;
+        const longuitud = countryInfo.longitude;
+        let continentName;
+        if (countryInfo.continent.includes("America")) {
+            continentName = obtenerContinenteAmericano(countryInfo)
+        } else {
+            continentName = countryInfo.continent;
+        }
+        reemplazarEspaciosEnCapital(countryInfo);
+        const capital = quitarTildes(countryInfo.capital);
+        const name = document.getElementById("nombre");
+        name.textContent = countryInfo.name;
+        limpiarInput();
+        mostrarElemento();
+        centrarCamaraACoordenadas(latitud, longuitud);
+        updateClock(continentName, countryName, capital);
+        marcarPaisEnEsfera(latitud, longuitud);
+    })
+    .catch(error => {
+        alert(error);
+    });
 });
 
 //MODAL
