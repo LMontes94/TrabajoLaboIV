@@ -164,7 +164,9 @@ function obtenerDatosPais(countryName) {
         .then(response => {
             response = response[0]
             const countryInfo = {
+                name: countryName,
                 continent: response.continents[0],
+                capital: response.capital[0],
                 latitude: response.capitalInfo.latlng[0],
                 longitude: response.capitalInfo.latlng[1]
             }
@@ -340,7 +342,8 @@ updateButton.addEventListener("click", async () => {
         if (countryName) {
                 obtenerDatosPais(countryName)
             .then(countryInfo => {
-                console.log("countryInfo: " + countryInfo.continent + " " + countryInfo.latitude + " " + countryInfo.longitude);
+                console.log("countryInfo:");
+                console.log(countryInfo);
                 const latitud = obtenerLatitud(countryInfo.latitude);
                 const longuitud = obtenerLongitud(countryInfo.longitude);
                 let continentName;
@@ -350,12 +353,10 @@ updateButton.addEventListener("click", async () => {
                 } else {
                     continentName = countryInfo.continent;
                 }
-                console.log(countryName)
                 reemplazarEspaciosEnCapital(countryInfo);
                 const capital = quitarTildes(countryInfo.capital);
-                console.log(capital);
                 const name = document.getElementById("nombre");
-                name.textContent = countryName;
+                name.textContent = countryInfo.name;
                 limpiarInput();
                 mostrarElemento();
                 centrarCamaraACoordenadas(latitud, longuitud);
