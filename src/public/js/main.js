@@ -159,26 +159,22 @@ function obtenerPais() {
 
 //datos del pais en la api
 function obtenerDatosPais(countryName) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://restcountries.com/v3.1/name/${countryName}`);
-    xhr.onload = () => {
-        if (xhr.status !== 200) {
-            throw new Error("Error obteniendo datos del país: error de conexión con servidor");
-        }
-        const response = JSON.parse(xhr.responseText)[0];
-        const countryInfo = {
-            continent: response.continents[0],
-            latitude: response.capitalInfo.latlng[0],
-            longitude: response.capitalInfo.latlng[1]
-        }
-        for (let key in countryInfo) {
-            if (countryInfo[key] == undefined) {
-                throw new Error("Error obteniendo datos del país: no se encuentran los campos necesarios");
+    return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+        .then(response => response.json())
+        .then(response => {
+            response = response[0]
+            const countryInfo = {
+                continent: response.continents[0],
+                latitude: response.capitalInfo.latlng[0],
+                longitude: response.capitalInfo.latlng[1]
             }
-        }
-        return countryInfo;
-    };
-    xhr.send();
+            for (let key in countryInfo) {
+                if (countryInfo[key] == undefined) {
+                    throw new Error("Error obteniendo datos del país: no se encuentran los campos necesarios");
+                }
+            }
+            return countryInfo;
+        })
 }
 
 //obtener latitud del pais 
