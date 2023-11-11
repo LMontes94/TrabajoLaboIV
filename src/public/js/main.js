@@ -6,7 +6,7 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/js
 const EARTH_RADIUS = 6.371000;
 let scene, camera, renderer, sphere, controls, skybox;
 
-
+//rotacion de la esfera
 function setSphereRotationDefault() {
     let increaseValue = 0.0003 * EARTH_RADIUS;
     if (sphere.rotation.y + increaseValue > EARTH_RADIUS) {
@@ -25,6 +25,9 @@ const hdBtn = document.querySelector(".hd");
 sdBtn.onclick = () => changeTextQuality("low");
 hdBtn.onclick = () => changeTextQuality("high");
 
+
+
+//creacion de las variables a acceder
 function createPathStrings(filename) {
     const basePath = "./img/skybox/";
     const baseFilename = basePath + filename;
@@ -36,6 +39,8 @@ function createPathStrings(filename) {
     return pathStrings;
 }
 
+
+//crear el cargador de texturas
 function createMaterialArray(filename) {
     const skyboxImagepaths = createPathStrings(filename);
     const materialArray = skyboxImagepaths.map((image) => {
@@ -45,6 +50,9 @@ function createMaterialArray(filename) {
     return materialArray;
 }
 
+
+
+//setear la textura en la skybox (estrellas y la esfera dentro)
 function setSkyBox() {
     const materialArray = createMaterialArray(skyboxImage);
     let temp = new THREE.TextureLoader().load("./img/space_stars_bg.jpg");
@@ -190,6 +198,8 @@ function calcularCoordenadas(latitud, longitud, radio) {
     return { x, y, z };
 }
 
+
+//centrar la camara
 function centrarCamaraACoordenadas(latitud, longitud) {
     guardarRotacionEsfera();
     const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS); // El tercer parámetro (5) es el radio de la esfera
@@ -208,18 +218,24 @@ let rotationX = 0;
 let rotationY = 0;
 let rotationZ = 0;
 
+
+//rotar al punto
 function guardarRotacionEsfera() {
     rotationX = sphere.rotation.x;
     rotationY = sphere.rotation.y;
     rotationZ = sphere.rotation.z;
 }
 
+
+//volver al inicio para que todo funcione desde el punto 0 y de bien la coordenada
 function restaurarRotacionEsfera() {
     sphere.rotation.x = rotationX;
     sphere.rotation.y = rotationY;
     sphere.rotation.z = rotationZ;
 }
 
+
+//obtener latitud
 function obtenerLatitud(countryInfo) {
     if (countryInfo) {
         const latitud = (parseFloat(countryInfo.south) + parseFloat(countryInfo.north)) / 2;
