@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0";
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 
@@ -138,10 +138,14 @@ window.addEventListener("resize", onWindowResize, false);
 init();
 animate();
 
+
+*/
+
+
 //funciones js para funcionamiento y no three js
 
 
-//texto hidden hora/dia/pais
+//texto hidden hora/dia/pais arreglo
 document.querySelector('.quality-select3').style.display = 'none';
 
 function mostrarElemento() {
