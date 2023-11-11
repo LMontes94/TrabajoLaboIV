@@ -1,5 +1,5 @@
 //funciones js para funcionamiento y no three js
-
+import {sphere} from "./three.js";
 
 //texto hidden hora/dia/pais arreglo
 document.querySelector('.quality-select3').style.display = 'none';
