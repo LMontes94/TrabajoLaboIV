@@ -234,7 +234,8 @@ function restaurarRotacionEsfera() {
     sphere.rotation.z = rotationZ;
 }
 
-
+/*
+ESTO FUNCIONA CON LA OTRA API QUE TIENE PROBLEMAS EN EL DEPLOY EN VERCEL.
 //obtener latitud
 function obtenerLatitud(countryInfo) {
     if (countryInfo) {
@@ -256,7 +257,7 @@ function obtenerLongitud(countryInfo) {
         console.error("No se proporcionaron datos de país.");
     }
 }
-
+*/
 
 
 
