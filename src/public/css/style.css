@@ -7,6 +7,7 @@
   background: url("../img/space_stars_bg.jpg") no-repeat center center;
   background-size: cover;
 }
+
 .btn-wrapper {
   display: flex;
   flex-direction: row;
@@ -16,6 +17,7 @@
   left: 2%;
   width: 120px;
 }
+
 .btn {
   background: white;
   color: black;

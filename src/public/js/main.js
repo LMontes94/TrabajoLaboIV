@@ -25,8 +25,6 @@ const hdBtn = document.querySelector(".hd");
 sdBtn.onclick = () => changeTextQuality("low");
 hdBtn.onclick = () => changeTextQuality("high");
 
-
-
 //creacion de las variables a acceder
 function createPathStrings(filename) {
     const basePath = "./img/skybox/";
@@ -39,7 +37,6 @@ function createPathStrings(filename) {
     return pathStrings;
 }
 
-
 //crear el cargador de texturas
 function createMaterialArray(filename) {
     const skyboxImagepaths = createPathStrings(filename);
@@ -49,8 +46,6 @@ function createMaterialArray(filename) {
     });
     return materialArray;
 }
-
-
 
 //setear la textura en la skybox (estrellas y la esfera dentro)
 function setSkyBox() {
@@ -120,23 +115,18 @@ function changeTextQuality(quality) {
     }
 }
 
-
-
-
 //animacion y render threejs
 
 function animate() {
-    requestAnimationFrame(animate);
 
+    requestAnimationFrame(animate);
     sphereRotationSetter();
     controls.update();
     renderer.render(scene, camera);
 }
 
-
-
-
 function onWindowResize() {
+
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -147,14 +137,11 @@ window.addEventListener("resize", onWindowResize, false);
 init();
 animate();
 
-
 //texto hidden hora/dia/pais arreglo
 document.querySelector('.quality-select3').style.display = 'none';
 
 function mostrarElemento() {
-
     document.querySelector('.quality-select3').style.display = 'block';
-
 }
 
 //obtener pais
@@ -163,9 +150,9 @@ function obtenerPais() {
     return countryInput.value;
 }
 
-
 //datos del pais en la api
 function obtenerDatosPais(countryName) {
+
     return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
         .then(response => response.json())
         .then(response => {
@@ -188,6 +175,7 @@ function obtenerDatosPais(countryName) {
 
 //obtener latitud del pais 
 function calcularCoordenadas(latitud, longitud, radio) {
+
     const phi = (90 - latitud) * (Math.PI / 180);
     const theta = (longitud + 180) * (Math.PI / 180);
 
@@ -198,9 +186,9 @@ function calcularCoordenadas(latitud, longitud, radio) {
     return { x, y, z };
 }
 
-
 //centrar la camara
 function centrarCamaraACoordenadas(latitud, longitud) {
+
     guardarRotacionEsfera();
     const coordenadas = calcularCoordenadas(latitud, longitud, EARTH_RADIUS); // El tercer parámetro (5) es el radio de la esfera
     // Establece la posición de la cámara en función de las coordenadas
@@ -218,7 +206,6 @@ let rotationX = 0;
 let rotationY = 0;
 let rotationZ = 0;
 
-
 //rotar al punto
 function guardarRotacionEsfera() {
     rotationX = sphere.rotation.x;
@@ -226,40 +213,12 @@ function guardarRotacionEsfera() {
     rotationZ = sphere.rotation.z;
 }
 
-
 //volver al inicio para que todo funcione desde el punto 0 y de bien la coordenada
 function restaurarRotacionEsfera() {
     sphere.rotation.x = rotationX;
     sphere.rotation.y = rotationY;
     sphere.rotation.z = rotationZ;
 }
-
-/*
-ESTO FUNCIONA CON LA OTRA API QUE TIENE PROBLEMAS EN EL DEPLOY EN VERCEL.
-//obtener latitud
-function obtenerLatitud(countryInfo) {
-    if (countryInfo) {
-        const latitud = (parseFloat(countryInfo.south) + parseFloat(countryInfo.north)) / 2;
-        console.log(latitud);
-        return latitud;
-    } else {
-        console.error("No se proporcionaron datos de país.");
-    }
-}
-
-//obtener longitud del pais
-function obtenerLongitud(countryInfo) {
-    if (countryInfo) {
-        const longitud = (parseFloat(countryInfo.west) + parseFloat(countryInfo.east)) / 2;
-        console.log("Longitud:", longitud);
-        return longitud;
-    } else {
-        console.error("No se proporcionaron datos de país.");
-    }
-}
-*/
-
-
 
 //union de america del norte y sur
 function obtenerContinenteAmericano() {
@@ -282,7 +241,6 @@ function limpiarInput() {
     document.getElementById("country").value = "";
 }
 
-
 //limpiar el intervalo del reloj
 function limpiarClock(intervalo) {
     if (intervalo) {
@@ -291,7 +249,6 @@ function limpiarClock(intervalo) {
     }
     document.getElementById("clock").value = ""
 }
-
 
 //obtener hora segun el timezone del pais
 function obtenerHora(timezone) {
@@ -325,8 +282,6 @@ function updateClock(continentName, countryName, capital) {
             .then(data => {
                 console.log(data)
                 if (data.datetime) {
-                    //const hora = dateTimeString.match(/T(\d{2}:\d{2}:\d{2})/)[1];/*la expresión regular /T(\d{2}:\d{2}:\d{2})/ busca el patrón "T" 
-                    //                                                                     seguido de "HH:MM:SS" en la cadena dateTimeString y el [1] extrae la parte de la hora. */
                     const fechaCompleta = obtenerFecha(data.timezone);
                     console.log(fechaCompleta);
 
@@ -348,8 +303,6 @@ function updateClock(continentName, countryName, capital) {
         // Puedes mostrar un mensaje de error en el reloj o realizar alguna otra acción en caso de error
     }
 }
-
-
 
 //boton update para mostrar todo lo hecho anteriormente
 const updateButton = document.getElementById("update-button");
@@ -386,10 +339,6 @@ updateButton.addEventListener("click", async () => {
     });
 });
 
-
-
-
-
 //MODAL FINAL
 
 const modal = document.getElementById("myModal");
@@ -404,8 +353,6 @@ window.addEventListener("load", () => {
 acceptButton.addEventListener("click", () => {
     modal.style.display = "none";
 });
-
-
 
 let marcador //marcador pais
 function marcarPaisEnEsfera(latitud, longitud) {
